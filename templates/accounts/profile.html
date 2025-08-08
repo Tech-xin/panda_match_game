@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block title %}Panda Match - Profile{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center my-5">
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-header">
+                <h2 class="mb-0">Panda Match</h2>
+            </div>
+            <div class="card-body">
+                <div class="row align-items-center mb-4">
+                    <div class="col-auto">
+                        <img src="https://via.placeholder.com/100" alt="Profile" class="rounded-circle" style="width: 100px; height: 100px;">
+                    </div>
+                    <div class="col">
+                        <h3>{{ user.username }}</h3>
+                        <p class="text-muted mb-0">Level Progress: {{ player.level_progress }}</p>
+                        <p class="text-muted mb-0">Total Score: {{ player.score }}</p>
+                    </div>
+                </div>
+                
+                <form method="post">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        <label for="id_username" class="form-label">Username</label>
+                        {{ form.username|as_crispy_field }}
+                    </div>
+                    <div class="mb-3">
+                        <label for="id_email" class="form-label">Email address</label>
+                        {{ form.email|as_crispy_field }}
+                    </div>
+                    <div class="mb-3">
+                        <label for="password" class="form-label">Password</label>
+                        <div class="input-group">
+                            <input type="password" class="form-control" id="password" value="••••••••" disabled>
+                            <a href="{% url 'password_reset' %}" class="btn btn-outline-secondary">Change</a>
+                        </div>
+                    </div>
+                    
+                    <div class="d-flex justify-content-between mt-4">
+                        <button type="submit" class="btn btn-primary">Save settings</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

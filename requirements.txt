@@ -1,0 +1,20 @@
+# Django and extensions
+Django==4.2.7
+django-crispy-forms==2.0
+crispy-bootstrap4==2022.1
+
+# For image processing (optional)
+Pillow==10.0.1
+
+# For deployment
+gunicorn==21.2.0
+
+# For production database (optional)
+psycopg2-binary==2.9.7  # For PostgreSQL
+
+# For testing
+pytest==7.4.2
+pytest-django==4.5.2
+
+# For development
+django-debug-toolbar==4.2.0

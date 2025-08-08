@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+
+{% block title %}Panda Match - About{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center my-5">
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-header">
+                <h1 class="text-center mb-0">About Panda Match</h1>
+            </div>
+            <div class="card-body">
+                <h3 class="mb-4">Welcome to Panda Match!</h3>
+                
+                <p>Panda Match is a fun and engaging web-based match-3 puzzle game where players match three identical blocks to clear them from the board.</p>
+                
+                <h4 class="mt-4">How to Play</h4>
+                <ol>
+                    <li>Select three identical blocks to clear them from the board.</li>
+                    <li>Aim to complete each level within the limited number of moves.</li>
+                    <li>Use special items like reshuffle, withdraw, and add buffer to help you progress.</li>
+                    <li>Earn points and compete with other players on the leaderboards.</li>
+                </ol>
+                
+                <h4 class="mt-4">Special Items</h4>
+                <ul>
+                    <li><strong>Reshuffle:</strong> Randomly reorganize all tiles on the board.</li>
+                    <li><strong>Withdraw:</strong> Cancel your current selection of tiles.</li>
+                    <li><strong>Add Buffer:</strong> Add new tiles to the board.</li>
+                </ul>
+                
+                <h4 class="mt-4">Leaderboards</h4>
+                <p>Challenge yourself and other players by competing on our daily, weekly, and all-time leaderboards!</p>
+                
+                <div class="text-center mt-4">
+                    {% if user.is_authenticated %}
+                    <a href="{% url 'game_home' %}" class="btn btn-primary">Start Playing Now!</a>
+                    {% else %}
+                    <a href="{% url 'signup' %}" class="btn btn-primary">Register to Play!</a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

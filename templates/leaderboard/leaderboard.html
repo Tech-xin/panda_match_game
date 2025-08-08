@@ -1,0 +1,123 @@
+{% extends 'base.html' %}
+
+{% block title %}Panda Match - {{ leaderboard_type }} Leaderboard{% endblock %}
+
+{% block content %}
+<div class="row mb-4">
+    <div class="col-12 text-center">
+        <h1>{{ leaderboard_type }} Leaderboard</h1>
+        <p class="lead">See how you rank against other players!</p>
+    </div>
+</div>
+
+<div class="row mb-5">
+    <div class="col-md-8 mx-auto">
+        <div class="card">
+            <div class="card-header">
+                <h2 class="text-center mb-0">Top Players</h2>
+            </div>
+            <div class="card-body p-0">
+                <table class="table table-hover table-striped mb-0">
+                    <thead class="table-dark">
+                        <tr>
+                            <th scope="col" class="text-center">#</th>
+                            <th scope="col">Player</th>
+                            <th scope="col" class="text-center">Score</th>
+                            {% if leaderboard_type != "All Time" %}
+                            <th scope="col" class="text-center">Date</th>
+                            {% endif %}
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for entry in top_players %}
+                        <tr {% if entry.player == user.player %}class="table-primary"{% endif %}>
+                            <td class="text-center">{{ forloop.counter }}</td>
+                            <td>
+                                {% if entry.player == user.player %}
+                                <strong>{{ entry.player.user.username }}</strong> (You)
+                                {% else %}
+                                {{ entry.player.user.username }}
+                                {% endif %}
+                            </td>
+                            <td class="text-center">{{ entry.score }}</td>
+                            {% if leaderboard_type != "All Time" %}
+                            <td class="text-center">{{ entry.date_recorded|date:"M d, Y" }}</td>
+                            {% endif %}
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="4" class="text-center">No players on the leaderboard yet.</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% if player_entry and player_rank > 10 %}
+<div class="row mb-5">
+    <div class="col-md-8 mx-auto">
+        <div class="card">
+            <div class="card-header">
+                <h2 class="text-center mb-0">Your Rank</h2>
+            </div>
+            <div class="card-body p-0">
+                <table class="table table-hover mb-0">
+                    <thead class="table-dark">
+                        <tr>
+                            <th scope="col" class="text-center">#</th>
+                            <th scope="col">Player</th>
+                            <th scope="col" class="text-center">Score</th>
+                            {% if leaderboard_type != "All Time" %}
+                            <th scope="col" class="text-center">Date</th>
+                            {% endif %}
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="table-primary">
+                            <td class="text-center">{{ player_rank }}</td>
+                            <td><strong>{{ user.username }}</strong> (You)</td>
+                            <td class="text-center">{{ player_entry.score }}</td>
+                            {% if leaderboard_type != "All Time" %}
+                            <td class="text-center">{{ player_entry.date_recorded|date:"M d, Y" }}</td>
+                            {% endif %}
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% elif not player_entry %}
+<div class="row mb-5">
+    <div class="col-md-8 mx-auto">
+        <div class="alert alert-info text-center">
+            <h4 class="alert-heading">You're not on this leaderboard yet!</h4>
+            <p>Play more games to get your name on the {{ leaderboard_type|lower }} leaderboard.</p>
+            <hr>
+            <a href="{% url 'game_home' %}" class="btn btn-primary">Start Playing</a>
+        </div>
+    </div>
+</div>
+{% endif %}
+
+<div class="row mb-4">
+    <div class="col-12 text-center">
+        <div class="btn-group" role="group">
+            <a href="{% url 'daily_leaderboard' %}" class="btn btn-secondary {% if leaderboard_type == 'Daily' %}active{% endif %}">Daily</a>
+            <a href="{% url 'weekly_leaderboard' %}" class="btn btn-secondary {% if leaderboard_type == 'Weekly' %}active{% endif %}">Weekly</a>
+            <a href="{% url 'all_time_leaderboard' %}" class="btn btn-secondary {% if leaderboard_type == 'All Time' %}active{% endif %}">All-Time</a>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-12 text-center">
+        <a href="{% url 'leaderboard_home' %}" class="btn btn-secondary">
+            <i class="fas fa-arrow-left me-2"></i> Back to Leaderboard Home
+        </a>
+    </div>
+</div>
+{% endblock %}

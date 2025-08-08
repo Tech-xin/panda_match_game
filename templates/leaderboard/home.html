@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+
+{% block title %}Panda Match - Leaderboard{% endblock %}
+
+{% block content %}
+<div class="row mb-4">
+    <div class="col-12 text-center">
+        <h1>Leaderboard</h1>
+        <p class="lead">See how you rank against other players!</p>
+    </div>
+</div>
+
+<div class="row row-cols-1 row-cols-md-3 g-4 mb-5">
+    <div class="col">
+        <div class="card h-100">
+            <div class="card-body text-center">
+                <i class="fas fa-calendar-day fa-3x mb-3 text-primary"></i>
+                <h3 class="card-title">Daily Rankings</h3>
+                <p class="card-text">See the top players for today.</p>
+                <a href="{% url 'daily_leaderboard' %}" class="btn btn-primary mt-2">View Daily</a>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col">
+        <div class="card h-100">
+            <div class="card-body text-center">
+                <i class="fas fa-calendar-week fa-3x mb-3 text-primary"></i>
+                <h3 class="card-title">Weekly Rankings</h3>
+                <p class="card-text">See the top players for this week.</p>
+                <a href="{% url 'weekly_leaderboard' %}" class="btn btn-primary mt-2">View Weekly</a>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col">
+        <div class="card h-100">
+            <div class="card-body text-center">
+                <i class="fas fa-trophy fa-3x mb-3 text-primary"></i>
+                <h3 class="card-title">All-Time Rankings</h3>
+                <p class="card-text">See the all-time top players.</p>
+                <a href="{% url 'all_time_leaderboard' %}" class="btn btn-primary mt-2">View All-Time</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-12 text-center">
+        <a href="{% url 'game_home' %}" class="btn btn-secondary">
+            <i class="fas fa-arrow-left me-2"></i> Back to Game
+        </a>
+    </div>
+</div>
+{% endblock %}

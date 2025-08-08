@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+
+{% block title %}Panda Match - Level Select{% endblock %}
+
+{% block content %}
+<div class="row mb-4">
+    <div class="col-12 text-center">
+        <h1>Select a Level</h1>
+        <p class="lead">Choose a level to play. Complete each level to unlock the next one.</p>
+    </div>
+</div>
+
+<div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4 mb-5">
+    {% for data in level_data %}
+    <div class="col">
+        <div class="card h-100 {% if not data.unlocked %}text-muted bg-light{% endif %}">
+            <div class="card-body text-center">
+                <h3 class="card-title">Level {{ data.level.level_id }}</h3>
+                <p class="card-text">
+                    <strong>Difficulty:</strong> 
+                    {% with ''|center:data.level.difficulty as range %}
+                    {% for _ in range %}
+                    <i class="fas fa-star"></i>
+                    {% endfor %}
+                    {% endwith %}
+                </p>
+                <p class="card-text">
+                    {% if data.best_score > 0 %}
+                    <strong>Best Score:</strong> {{ data.best_score }}
+                    {% else %}
+                    <strong>Status:</strong> {% if data.unlocked %}Not played yet{% else %}Locked{% endif %}
+                    {% endif %}
+                </p>
+            </div>
+            <div class="card-footer">
+                {% if data.unlocked %}
+                <a href="{% url 'start_game' data.level.level_id %}" class="btn btn-primary w-100">
+                    <i class="fas fa-play me-2"></i> Play Level
+                </a>
+                {% else %}
+                <button class="btn btn-secondary w-100" disabled>
+                    <i class="fas fa-lock me-2"></i> Locked
+                </button>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    {% empty %}
+    <div class="col-12 text-center">
+        <div class="alert alert-info">
+            No levels available. Please check back later.
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+<div class="row">
+    <div class="col-12 text-center">
+        <a href="{% url 'game_home' %}" class="btn btn-secondary">
+            <i class="fas fa-arrow-left me-2"></i> Back to Game Home
+        </a>
+    </div>
+</div>
+{% endblock %}

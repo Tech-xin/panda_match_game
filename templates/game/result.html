@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+
+{% block title %}Panda Match - Level Completed{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center my-5">
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-header text-center">
+                <h2 class="mb-0">Level Completed!</h2>
+            </div>
+            <div class="card-body text-center">
+                <div class="mb-4">
+                    <i class="fas fa-trophy fa-5x text-warning mb-3"></i>
+                    <h3>Congratulations!</h3>
+                    <p class="lead">You've completed Level {{ session.level.level_id }}!</p>
+                </div>
+                
+                <div class="row g-4 mb-4">
+                    <div class="col-md-4">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title">Score</h5>
+                                <p class="display-4">{{ session.score }}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title">Moves</h5>
+                                <p class="display-4">{{ moves }}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title">Time</h5>
+                                <p class="display-4">{{ duration|floatformat:0 }}s</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="d-grid gap-3 d-md-flex justify-content-center">
+                    {% if next_level %}
+                    <a href="{% url 'start_game' next_level.level_id %}" class="btn btn-primary">
+                        <i class="fas fa-forward me-2"></i> Continue to Level {{ next_level.level_id }}
+                    </a>
+                    {% endif %}
+                    <a href="{% url 'level_select' %}" class="btn btn-secondary">
+                        <i class="fas fa-th-list me-2"></i> Select Level
+                    </a>
+                    <a href="{% url 'leaderboard_home' %}" class="btn btn-info">
+                        <i class="fas fa-trophy me-2"></i> View Leaderboard
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

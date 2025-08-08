@@ -1,0 +1,93 @@
+{% extends 'base.html' %}
+
+{% block title %}Panda Match - Game Home{% endblock %}
+
+{% block content %}
+<div class="row mb-4">
+    <div class="col-12 text-center">
+        <h1>Welcome to Panda Match!</h1>
+        <p class="lead">Match three identical blocks to clear them from the board.</p>
+    </div>
+</div>
+
+<div class="row mb-5">
+    <div class="col-md-6 mx-auto">
+        <div class="card text-center">
+            <div class="card-body">
+                <h5 class="card-title">Start a New Game</h5>
+                <p class="card-text">Choose a level to play.</p>
+                <a href="{% url 'level_select' %}" class="btn btn-primary btn-lg">
+                    <i class="fas fa-play me-2"></i> Start Game
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% if active_sessions %}
+<div class="row mb-4">
+    <div class="col-12">
+        <h2 class="text-center mb-4">Continue Playing</h2>
+        
+        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+            {% for session in active_sessions %}
+            <div class="col">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <h5 class="card-title">Level {{ session.level.level_id }}</h5>
+                        <p class="card-text">
+                            <strong>Started:</strong> {{ session.start_time|date:"M d, Y H:i" }}<br>
+                            <strong>Current Score:</strong> {{ session.score }}
+                        </p>
+                    </div>
+                    <div class="card-footer d-flex justify-content-between">
+                        <a href="{% url 'play_game' session.session_id %}" class="btn btn-primary">
+                            <i class="fas fa-play me-1"></i> Continue
+                        </a>
+                        <a href="{% url 'abandon_game' session.session_id %}" class="btn btn-outline-danger">
+                            <i class="fas fa-trash me-1"></i> Abandon
+                        </a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endif %}
+
+<div class="row">
+    <div class="col-12 text-center">
+        <h2 class="mb-4">Game Stats</h2>
+        
+        <div class="row g-4">
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-body text-center">
+                        <h5 class="card-title">Your Score</h5>
+                        <p class="display-4">{{ player.score }}</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-body text-center">
+                        <h5 class="card-title">Level Progress</h5>
+                        <p class="display-4">{{ player.level_progress }}</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-body text-center">
+                        <h5 class="card-title">Leaderboard</h5>
+                        <a href="{% url 'leaderboard_home' %}" class="btn btn-secondary mt-2">View Rankings</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
